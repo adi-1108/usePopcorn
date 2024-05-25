@@ -2,7 +2,11 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      height:{
+        'custom-height' : 'calc(100vh - 7.2rem )'
+      }
+    },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };
