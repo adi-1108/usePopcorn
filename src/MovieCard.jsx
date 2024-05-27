@@ -1,9 +1,10 @@
 import React from "react";
 
-const MovieCard = ({movieObj}) => {
+const MovieCard = ({movieObj , handleSelectedMovie}) => {
   
   return (
     <div
+    onClick={() => handleSelectedMovie(movieObj.imdbID)}
       className="my-2 flex items-center gap-6 px-4 py-2 transition-all duration-200 ease-in-out hover:cursor-pointer hover:rounded-xl hover:bg-gray-700 hover:ring-1 hover:ring-gray-600 "
     >
       <img
