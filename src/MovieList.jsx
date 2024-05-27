@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
+import Loader from "./Loader";
 
 const KEY = "9c9d97ab";
 const MovieList = ({ query, handleSelectedMovie, movies, setMovies }) => {
@@ -46,11 +47,7 @@ const MovieList = ({ query, handleSelectedMovie, movies, setMovies }) => {
         movies.map((movie) => <MovieCard movieObj={movie} key={movie.imdbID} />)
       )} */}
 
-      {loading && (
-        <div class="flex h-screen justify-center">
-          <p className="text-white">Loading....</p>
-        </div>
-      )}
+      {loading && <Loader />}
       {!loading &&
         !error &&
         movies?.map((movie) => (

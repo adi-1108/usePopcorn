@@ -5,17 +5,25 @@ import Box from "./Box";
 import MovieList from "./MovieList";
 import Searchbar from "./Searchbar";
 import MovieDetails from "./MovieDetails";
+import WatchTime from "./WatchTime";
 
 const App = () => {
   const [query, setQuery] = useState("");
   const [selectedID, setSelectedID] = useState(null);
   const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
 
   const handleSelectedMovie = (id) => {
     setSelectedID(id);
   };
 
- 
+  const handleDeselectMovie = () => {
+    setSelectedID(null);
+  };
+
+  const handleAddWatched = (movie) => {
+    setWatched((movie) => [...watched, movie]);
+  };
 
   return (
     <div className="p-3 bg-slate-900 w-screen h-screen overflow-hidden">
@@ -43,9 +51,15 @@ const App = () => {
           />
         </Box>
         <Box>
-          <MovieDetails
-            selectedID={selectedID}
-          />
+          {selectedID ? (
+            <MovieDetails
+              handleDeselectMovie={handleDeselectMovie}
+              selectedID={selectedID}
+              handleAddWatched={handleAddWatched}
+            />
+          ) : (
+            <WatchTime />
+          )}
         </Box>
       </div>
     </div>

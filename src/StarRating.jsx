@@ -9,7 +9,7 @@ const StarRating = ({ maxRating = 5 }) => {
       <div className="flex gap-2">
         {Array.from({ length: maxRating }, (_, i) => {
           return (
-            <span className="" onMouseEnter={() => setTempRating(i+1)} onMouseLeave={() => setTempRating(0)}>
+            <span className="flex justify-center items-center" onMouseEnter={() => setTempRating(i+1)} onMouseLeave={() => setTempRating(0)}>
               <svg
                 key={i}
                 className="w-6 h-6 text-yellow-500"
@@ -28,6 +28,8 @@ const StarRating = ({ maxRating = 5 }) => {
         })}
       </div>
       <p className="text-yellow-500">{rating || ""}</p>
+
+      
     </div>
   );
 };
