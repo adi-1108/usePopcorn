@@ -29,11 +29,11 @@ const MovieDetails = ({
 
   const handleAdd = () => {
     const newWatchedMovie = {
-      imdbRating: movieDetails.imdbRating,
-      runtime: movieDetails.Runtime,
-      runtime: runtime.split(" ").at(0),
+      imdbRating: +movieDetails.imdbRating,
+      runtime: +movieDetails.Runtime.split(" ")[0],
+      
     };
-    handleAddWatched(newWatchedMovie);
+    handleAddWatched(newWatchedMovie); 
   };
   return (
     <div className=" flex flex-col gap-4">
@@ -62,7 +62,7 @@ const MovieDetails = ({
             <p className="text-white">{movieDetails.Plot}</p>
           </div>
 
-          <div>
+          <div className="flex gap-2">
             <button
               onClick={() => handleDeselectMovie()}
               className="w-fit px-6 py-2 bg-blue-600 font-bold text-white rounded-lg shadow-xl"

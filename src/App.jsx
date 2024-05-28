@@ -21,9 +21,9 @@ const App = () => {
     setSelectedID(null);
   };
 
-  const handleAddWatched = (movie) => {
-    setWatched((movie) => [...watched, movie]);
-  };
+  const handleAddWatched = (movie) => setWatched((_prev) => [..._prev, movie]);
+
+  console.log(watched);
 
   return (
     <div className="p-3 bg-slate-900 w-screen h-screen overflow-hidden">
@@ -58,7 +58,7 @@ const App = () => {
               handleAddWatched={handleAddWatched}
             />
           ) : (
-            <WatchTime />
+            <WatchTime watchedMovie={watched} />
           )}
         </Box>
       </div>
