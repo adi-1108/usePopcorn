@@ -27,13 +27,19 @@ const MovieDetails = ({
     fetchDetails();
   }, [selectedID]);
 
+  useEffect(() => {
+    document.title = `Movie || ${movieDetails.Title}`;
+  }, [movieDetails.Title]);
+
   const handleAdd = () => {
     const newWatchedMovie = {
       imdbRating: +movieDetails.imdbRating,
       runtime: +movieDetails.Runtime.split(" ")[0],
-      
+      Title: movieDetails.Title,
+      Poster: movieDetails.Poster,
+      Year: movieDetails.Year,
     };
-    handleAddWatched(newWatchedMovie); 
+    handleAddWatched(newWatchedMovie);
   };
   return (
     <div className=" flex flex-col gap-4">
@@ -70,7 +76,10 @@ const MovieDetails = ({
               Back
             </button>
             <button
-              onClick={() => handleAdd()}
+              onClick={() => {
+                handleAdd();
+                handleDeselectMovie();
+              }}
               className="w-fit px-6 py-2 bg-blue-600 font-bold text-white rounded-lg shadow-xl"
             >
               Add to Watchlist

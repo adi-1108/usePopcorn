@@ -11,7 +11,10 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [selectedID, setSelectedID] = useState(null);
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(() => {
+    const storedValue = localStorage.getItem("watched");
+    return JSON.parse(storedValue);
+  });
 
   const handleSelectedMovie = (id) => {
     setSelectedID(id);
@@ -21,9 +24,18 @@ const App = () => {
     setSelectedID(null);
   };
 
-  const handleAddWatched = (movie) => setWatched((_prev) => [..._prev, movie]);
+  const clearWatchList = () => {
+    setWatched([]);
+  };
 
-  console.log(watched);
+  const handleAddWatched = (movie) => {
+    setWatched((_prev) => [..._prev, movie]);
+  };
+
+  useEffect(() => {
+    if (typeof localStorage !== "undefined")
+      localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
 
   return (
     <div className="p-3 bg-slate-900 w-screen h-screen overflow-hidden">
@@ -36,7 +48,7 @@ const App = () => {
           <Searchbar query={query} setQuery={setQuery} />
 
           <label className="text-white" htmlFor="">
-            Results found
+            Results found {movies.length}
           </label>
         </NavBar>
       </div>
@@ -58,7 +70,7 @@ const App = () => {
               handleAddWatched={handleAddWatched}
             />
           ) : (
-            <WatchTime watchedMovie={watched} />
+            <WatchTime clearWatchList={clearWatchList} watchedMovie={watched} />
           )}
         </Box>
       </div>

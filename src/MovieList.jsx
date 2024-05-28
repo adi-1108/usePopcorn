@@ -8,35 +8,43 @@ const MovieList = ({ query, handleSelectedMovie, movies, setMovies }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        setLoading(true);
-        setError("");
-        const response = await fetch(
-          `https://www.omdbapi.com/?apikey=${KEY}&s=${query}`
-        );
-
-        if (!response.ok) {
-          throw new Error("Something went wrong!");
+    const debounceFetch = setTimeout(() => {
+      const fetchMovies = async () => {
+        if (query.length < 3) {
+          setMovies([]);
+          setError("");
+          return;
         }
-        const data = await response.json();
-        if (data.Response === "False") {
-          throw new Error("Movie Not Found");
-        }
-        setMovies(data.Search);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
 
-      if (query.lenght < 3) {
-        setMovies([]);
-        setError("");
-        return;
-      }
-    };
-    fetchMovies();
+        try {
+          setLoading(true);
+          setError("");
+          const response = await fetch(
+            `https://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+          );
+
+          if (!response.ok) {
+            throw new Error("Something went wrong!");
+          }
+
+          const data = await response.json();
+
+          if (data.Response === "False") {
+            throw new Error("Movie Not Found");
+          }
+
+          setMovies(data.Search);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchMovies();
+    }, 500); // Adjust the delay as needed
+
+    return () => clearTimeout(debounceFetch);
   }, [query]);
 
   return (
